@@ -116,3 +116,39 @@ footer {
 }
 
 footer img { width:120px; opacity:.8; }
+/* === SCENE BACKGROUNDS === */
+
+.scene {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Лес / начало */
+.forest-bg {
+  background-image:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.25), rgba(0,0,0,.55)),
+    linear-gradient(to bottom, #1f3a2e, #0f1e17);
+}
+
+/* Туман / середина */
+.mist-bg {
+  background-image:
+    radial-gradient(circle at 50% 40%, rgba(255,255,255,.35), rgba(0,0,0,.45)),
+    linear-gradient(to bottom, #2a4b3c, #1a2f25);
+}
+
+/* Глубина / вечер */
+.deep-bg {
+  background-image:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.15), rgba(0,0,0,.65)),
+    linear-gradient(to bottom, #162820, #0b1511);
+}
+
+/* Читаемость текста */
+.scene h1,
+.scene h2,
+.scene p {
+  text-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
