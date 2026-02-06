@@ -1,1 +1,118 @@
-<CSS CONTENT OMITTED FOR BREVITY IN TOOL>
+:root {
+  --forest-deep:#2A4B3C;
+  --forest-sage:#8FAB93;
+  --wood-warm:#C9A25B;
+  --cream:#F7F4E8;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:Montserrat, sans-serif;
+  background:var(--cream);
+  color:#1A2F25;
+  overflow-x:hidden;
+}
+
+.scene {
+  height:220vh;
+  position:relative;
+}
+
+.scene-inner {
+  position:sticky;
+  top:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:30px;
+  text-align:center;
+  padding:40px 20px;
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+
+.scene.active .scene-inner {
+  opacity:1;
+  transform:translateY(0);
+}
+
+h1,h2 {
+  font-family:'Cormorant Garamond', serif;
+  color:var(--forest-deep);
+}
+
+h1 { font-size:3.8rem; line-height:1.1; }
+h2 { font-size:3rem; }
+
+.photo-frame {
+  max-width:420px;
+  border:3px solid var(--wood-warm);
+  padding:10px;
+  background:#fff;
+}
+
+.photo-frame img { width:100%; display:block; }
+
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+  max-width:900px;
+}
+
+.card {
+  padding:30px;
+  border:2px solid var(--wood-warm);
+  background:#fff;
+}
+
+.faq { max-width:800px; text-align:left; }
+
+.faq-item { margin-bottom:15px; border:1px solid var(--forest-sage); }
+
+.faq-q {
+  padding:15px;
+  background:rgba(143,171,147,.15);
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  cursor:pointer;
+}
+
+.faq-a {
+  display:none;
+  padding:20px;
+  background:#fff;
+}
+
+.faq-item.active .faq-a { display:block; }
+
+.rsvp { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
+
+.btn {
+  padding:18px 36px;
+  border:2px solid var(--wood-warm);
+  background:var(--wood-warm);
+  color:var(--forest-deep);
+  text-decoration:none;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+}
+
+.btn.secondary { background:transparent; color:var(--wood-warm); }
+
+footer {
+  height:120vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#1A2F25;
+  color:#8FAB93;
+  gap:20px;
+}
+
+footer img { width:120px; opacity:.8; }
