@@ -171,4 +171,75 @@ footer img { width:120px; opacity:.8; }
 .scene::before {
   opacity: calc(0.3 + var(--progress) * 0.4);
 }
+/* Подключение твоих шрифтов */
+@font-face {
+  font-family: 'DeutschGothic';
+  src: url('fonts/Deutsch Gothic Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Helmswald';
+  src: url('fonts/Helmswald.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Inkulinati';
+  src: url('fonts/Inkulinati-Regular.otf') format('opentype');
+}
 
+:root {
+  --castle-gold: #C9A25B;    /* Цвет из твоей палитры */
+  --castle-stone: #3E424B;   /* Глубокий серый */
+  --parchment: #F2E8D5;      /* Цвет пергамента */
+  --dark-void: #1A1C20;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--dark-void);
+  color: var(--parchment);
+}
+
+.castle-title {
+  font-family: 'DeutschGothic', serif;
+  color: var(--castle-gold);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+}
+
+.castle-font-alt {
+  font-family: 'Helmswald', sans-serif;
+}
+
+/* Стилизация блока Легенда */
+.parchment-scroll {
+  background: var(--parchment);
+  color: #2c2416;
+  padding: 40px;
+  max-width: 600px;
+  font-family: 'Inkulinati', serif;
+  font-size: 1.4rem;
+  line-height: 1.6;
+  border-radius: 2px;
+  box-shadow: 
+    inset 0 0 50px rgba(0,0,0,0.1),
+    10px 10px 30px rgba(0,0,0,0.5);
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Мощная готическая рамка для фото */
+.photo-frame {
+  border: 10px double var(--castle-gold);
+  outline: 2px solid var(--castle-stone);
+  box-shadow: 0 0 50px rgba(0,0,0,0.7);
+}
+
+/* Кнопки как наградные ленты */
+.btn {
+  font-family: 'Helmswald', sans-serif;
+  background: var(--castle-gold);
+  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+  color: var(--dark-void);
+  border: none;
+  padding: 12px 40px;
+}
