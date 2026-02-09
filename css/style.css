@@ -151,4 +151,23 @@ footer img { width:120px; opacity:.8; }
 .scene p {
   text-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
+/* === CINEMATIC SCROLL === */
+
+.scene-inner {
+  opacity: calc(var(--progress) * 1.2);
+  transform:
+    translateY(calc((1 - var(--progress)) * 60px))
+    scale(calc(0.96 + var(--progress) * 0.04));
+}
+
+/* параллакс для фото */
+.photo-frame {
+  transform:
+    translateY(calc((0.5 - var(--progress)) * 40px));
+}
+
+/* лёгкое движение света */
+.scene::before {
+  opacity: calc(0.3 + var(--progress) * 0.4);
+}
 
