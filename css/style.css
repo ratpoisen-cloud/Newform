@@ -1,105 +1,118 @@
-/* ПОДКЛЮЧЕНИЕ ШРИФТОВ */
-@font-face {
-  font-family: 'DeutschGothic';
-  src: url('../fonts/Deutsch Gothic Regular.otf') format('opentype');
-}
-@font-face {
-  font-family: 'Helmswald';
-  src: url('../fonts/Helmswald.otf') format('opentype');
-}
-@font-face {
-  font-family: 'Inkulinati';
-  src: url('../fonts/Inkulinati-Regular.otf') format('opentype');
-}
+/* ПОДКЛЮЧЕНИЕ ШРИФТОВ (пути должны быть верными) */
+@font-face { font-family: 'DeutschGothic'; src: url('../fonts/Deutsch Gothic Regular.otf'); }
+@font-face { font-family: 'Helmswald'; src: url('../fonts/Helmswald.otf'); }
+@font-face { font-family: 'Inkulinati'; src: url('../fonts/Inkulinati-Regular.otf'); }
 
 :root {
-  --castle-gold: #C9A25B;    /* Золото из твоей палитры */
-  --castle-stone: #3E424B;   /* Серый камень */
-  --parchment: #F2E8D5;      /* Твой крем/пергамент */
-  --deep-forest: #1A2F25;    /* Темная хвоя */
-  --castle-dark: #1A1C20;    /* Глубокий черный */
+  --royal-wine: #4A0E0E;    /* Тот самый благородный бордовый */
+  --castle-gold: #C9A25B;   /* Золото */
+  --parchment: #F2E8D5;     /* Светлый акцент */
+  --dark-shadow: rgba(0,0,0,0.7);
+  --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ОБЩИЕ СТИЛИ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: var(--castle-dark);
+  background-color: var(--royal-wine);
   color: var(--parchment);
-  margin: 0;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
+/* Глобальная анимация появления */
+.scene-inner {
+  opacity: 0;
+  transform: scale(0.95) translateY(30px);
+  transition: var(--transition);
+  will-change: transform, opacity;
+}
+
+.scene.active .scene-inner {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Адаптивные заголовки */
 .castle-main-title {
   font-family: 'DeutschGothic', serif;
   color: var(--castle-gold);
-  font-size: 4rem;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+  font-size: clamp(2.5rem, 8vw, 5rem); /* Размер подстраивается под экран */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-.castle-accent-font {
-  font-family: 'Helmswald', sans-serif;
-  color: var(--castle-gold);
-  font-size: 1.5rem;
-}
-
-/* БЛОК ЛЕГЕНДА */
+/* Блок ЛЕГЕНДА: Свиток */
 .castle-scroll {
   background: var(--parchment);
   color: #2c2416;
-  padding: 60px 40px;
-  max-width: 700px;
+  padding: clamp(20px, 5vw, 60px);
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
   border-radius: 4px;
-  position: relative;
-  box-shadow: 20px 20px 60px rgba(0,0,0,0.6);
   font-family: 'Inkulinati', serif;
-  font-size: 1.6rem;
-  line-height: 1.4;
-  border: 1px solid #d3c4a8;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  box-shadow: 0 20px 50px var(--dark-shadow);
+  position: relative;
 }
 
-.castle-scroll::before, .castle-scroll::after {
-  content: '';
-  position: absolute;
-  height: 20px; width: 105%;
-  background: #d3c4a8;
-  left: -2.5%;
-  border-radius: 10px;
-}
-.castle-scroll::before { top: -10px; }
-.castle-scroll::after { bottom: -10px; }
-
-/* ИКОНКИ-ГЕРБЫ */
-.castle-sigil {
-  font-size: 3rem;
-  color: var(--castle-gold);
-  margin: 20px 0;
-  filter: drop-shadow(0 0 10px var(--castle-gold));
+/* ВЫПАДАЮЩИЕ СПИСКИ (FAQ) */
+.faq-castle {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 40px;
 }
 
-/* ФОТО В СТИЛЕ КАРТИНЫ */
-.photo-frame {
-  border: 12px double var(--castle-gold);
-  background: var(--castle-stone);
-  padding: 15px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+.faq-item {
+  border: 1px solid var(--castle-gold);
+  margin-bottom: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-/* КНОПКА-ЩИТ */
-.castle-btn {
+.faq-q {
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: 'Helmswald', sans-serif;
-  background: var(--castle-gold);
-  color: var(--castle-dark);
-  padding: 20px 50px;
-  text-decoration: none;
-  font-weight: bold;
-  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
-  transition: transform 0.3s;
-  display: inline-block;
+  color: var(--castle-gold);
+  transition: background 0.3s;
 }
 
-.castle-btn:hover {
-  transform: scale(1.1);
-  background: #e0b66a;
+.faq-q:hover { background: rgba(201, 162, 91, 0.1); }
+
+.faq-a {
+  max-height: 0;
+  padding: 0 20px;
+  background: rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.4s;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.faq-item.active .faq-a {
+  max-height: 500px; /* Достаточно для текста */
+  padding: 20px;
+}
+
+.faq-q i { transition: transform 0.4s; }
+.faq-item.active .faq-q i { transform: rotate(180deg); }
+
+/* Адаптация фото */
+.photo-frame img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .scene { height: auto; min-height: 100vh; padding: 60px 0; }
+  .scene-inner { position: relative; top: 0; }
 }
