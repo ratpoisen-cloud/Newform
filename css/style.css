@@ -1,245 +1,105 @@
-:root {
-  --forest-deep:#2A4B3C;
-  --forest-sage:#8FAB93;
-  --wood-warm:#C9A25B;
-  --cream:#F7F4E8;
-}
-
-* { box-sizing:border-box; margin:0; padding:0; }
-
-body {
-  font-family:Montserrat, sans-serif;
-  background:var(--cream);
-  color:#1A2F25;
-  overflow-x:hidden;
-}
-
-.scene {
-  height:220vh;
-  position:relative;
-}
-
-.scene-inner {
-  position:sticky;
-  top:0;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:30px;
-  text-align:center;
-  padding:40px 20px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity .6s ease, transform .6s ease;
-}
-
-.scene.active .scene-inner {
-  opacity:1;
-  transform:translateY(0);
-}
-
-h1,h2 {
-  font-family:'Cormorant Garamond', serif;
-  color:var(--forest-deep);
-}
-
-h1 { font-size:3.8rem; line-height:1.1; }
-h2 { font-size:3rem; }
-
-.photo-frame {
-  max-width:420px;
-  border:3px solid var(--wood-warm);
-  padding:10px;
-  background:#fff;
-}
-
-.photo-frame img { width:100%; display:block; }
-
-.cards {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:25px;
-  max-width:900px;
-}
-
-.card {
-  padding:30px;
-  border:2px solid var(--wood-warm);
-  background:#fff;
-}
-
-.faq { max-width:800px; text-align:left; }
-
-.faq-item { margin-bottom:15px; border:1px solid var(--forest-sage); }
-
-.faq-q {
-  padding:15px;
-  background:rgba(143,171,147,.15);
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.3rem;
-  cursor:pointer;
-}
-
-.faq-a {
-  display:none;
-  padding:20px;
-  background:#fff;
-}
-
-.faq-item.active .faq-a { display:block; }
-
-.rsvp { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
-
-.btn {
-  padding:18px 36px;
-  border:2px solid var(--wood-warm);
-  background:var(--wood-warm);
-  color:var(--forest-deep);
-  text-decoration:none;
-  font-family:'Cormorant Garamond',serif;
-  font-size:1.2rem;
-}
-
-.btn.secondary { background:transparent; color:var(--wood-warm); }
-
-footer {
-  height:120vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:#1A2F25;
-  color:#8FAB93;
-  gap:20px;
-}
-
-footer img { width:120px; opacity:.8; }
-/* === SCENE BACKGROUNDS === */
-
-.scene {
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-/* Лес / начало */
-.forest-bg {
-  background-image:
-    radial-gradient(circle at 50% 30%, rgba(255,255,255,.25), rgba(0,0,0,.55)),
-    linear-gradient(to bottom, #1f3a2e, #0f1e17);
-}
-
-/* Туман / середина */
-.mist-bg {
-  background-image:
-    radial-gradient(circle at 50% 40%, rgba(255,255,255,.35), rgba(0,0,0,.45)),
-    linear-gradient(to bottom, #2a4b3c, #1a2f25);
-}
-
-/* Глубина / вечер */
-.deep-bg {
-  background-image:
-    radial-gradient(circle at 50% 20%, rgba(255,255,255,.15), rgba(0,0,0,.65)),
-    linear-gradient(to bottom, #162820, #0b1511);
-}
-
-/* Читаемость текста */
-.scene h1,
-.scene h2,
-.scene p {
-  text-shadow: 0 10px 30px rgba(0,0,0,.35);
-}
-/* === CINEMATIC SCROLL (FIXED) === */
-
-.scene-inner {
-  opacity: calc(var(--progress, 0.4) * 1.2);
-  transform:
-    translateY(calc((1 - var(--progress, 0.4)) * 60px))
-    scale(calc(0.96 + var(--progress, 0.4) * 0.04));
-}
-
-
-/* параллакс для фото */
-.photo-frame {
-  transform:
-    translateY(calc((0.5 - var(--progress)) * 40px));
-}
-
-/* лёгкое движение света */
-.scene::before {
-  opacity: calc(0.3 + var(--progress) * 0.4);
-}
-/* Подключение твоих шрифтов */
+/* ПОДКЛЮЧЕНИЕ ШРИФТОВ */
 @font-face {
   font-family: 'DeutschGothic';
-  src: url('fonts/Deutsch Gothic Regular.otf') format('opentype');
+  src: url('../fonts/Deutsch Gothic Regular.otf') format('opentype');
 }
 @font-face {
   font-family: 'Helmswald';
-  src: url('fonts/Helmswald.otf') format('opentype');
+  src: url('../fonts/Helmswald.otf') format('opentype');
 }
 @font-face {
   font-family: 'Inkulinati';
-  src: url('fonts/Inkulinati-Regular.otf') format('opentype');
+  src: url('../fonts/Inkulinati-Regular.otf') format('opentype');
 }
 
 :root {
-  --castle-gold: #C9A25B;    /* Цвет из твоей палитры */
-  --castle-stone: #3E424B;   /* Глубокий серый */
-  --parchment: #F2E8D5;      /* Цвет пергамента */
-  --dark-void: #1A1C20;
+  --castle-gold: #C9A25B;    /* Золото из твоей палитры */
+  --castle-stone: #3E424B;   /* Серый камень */
+  --parchment: #F2E8D5;      /* Твой крем/пергамент */
+  --deep-forest: #1A2F25;    /* Темная хвоя */
+  --castle-dark: #1A1C20;    /* Глубокий черный */
 }
 
+/* ОБЩИЕ СТИЛИ */
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: var(--dark-void);
+  background-color: var(--castle-dark);
   color: var(--parchment);
+  margin: 0;
+  overflow-x: hidden;
 }
 
-.castle-title {
+.castle-main-title {
   font-family: 'DeutschGothic', serif;
   color: var(--castle-gold);
+  font-size: 4rem;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+  letter-spacing: 4px;
+  text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
 }
 
-.castle-font-alt {
+.castle-accent-font {
   font-family: 'Helmswald', sans-serif;
+  color: var(--castle-gold);
+  font-size: 1.5rem;
 }
 
-/* Стилизация блока Легенда */
-.parchment-scroll {
+/* БЛОК ЛЕГЕНДА */
+.castle-scroll {
   background: var(--parchment);
   color: #2c2416;
-  padding: 40px;
-  max-width: 600px;
-  font-family: 'Inkulinati', serif;
-  font-size: 1.4rem;
-  line-height: 1.6;
-  border-radius: 2px;
-  box-shadow: 
-    inset 0 0 50px rgba(0,0,0,0.1),
-    10px 10px 30px rgba(0,0,0,0.5);
+  padding: 60px 40px;
+  max-width: 700px;
+  border-radius: 4px;
   position: relative;
+  box-shadow: 20px 20px 60px rgba(0,0,0,0.6);
+  font-family: 'Inkulinati', serif;
+  font-size: 1.6rem;
+  line-height: 1.4;
+  border: 1px solid #d3c4a8;
+}
+
+.castle-scroll::before, .castle-scroll::after {
+  content: '';
+  position: absolute;
+  height: 20px; width: 105%;
+  background: #d3c4a8;
+  left: -2.5%;
+  border-radius: 10px;
+}
+.castle-scroll::before { top: -10px; }
+.castle-scroll::after { bottom: -10px; }
+
+/* ИКОНКИ-ГЕРБЫ */
+.castle-sigil {
+  font-size: 3rem;
+  color: var(--castle-gold);
   margin: 20px 0;
+  filter: drop-shadow(0 0 10px var(--castle-gold));
 }
 
-/* Мощная готическая рамка для фото */
+/* ФОТО В СТИЛЕ КАРТИНЫ */
 .photo-frame {
-  border: 10px double var(--castle-gold);
-  outline: 2px solid var(--castle-stone);
-  box-shadow: 0 0 50px rgba(0,0,0,0.7);
+  border: 12px double var(--castle-gold);
+  background: var(--castle-stone);
+  padding: 15px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.8);
 }
 
-/* Кнопки как наградные ленты */
-.btn {
+/* КНОПКА-ЩИТ */
+.castle-btn {
   font-family: 'Helmswald', sans-serif;
   background: var(--castle-gold);
+  color: var(--castle-dark);
+  padding: 20px 50px;
+  text-decoration: none;
+  font-weight: bold;
   clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
-  color: var(--dark-void);
-  border: none;
-  padding: 12px 40px;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.castle-btn:hover {
+  transform: scale(1.1);
+  background: #e0b66a;
 }
