@@ -1,37 +1,42 @@
-const scenes = document.querySelectorAll('.scene');
+document.addEventListener('DOMContentLoaded', () => {
+  const scenes = document.querySelectorAll('.scene');
 
-function onScroll() {
-  scenes.forEach(scene => {
-    const rect = scene.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const progress = Math.min(Math.max((vh - rect.top) / (vh + rect.height), 0), 1);
+  // Функция контроля видимости сцен
+  const observerOptions = {
+    threshold: 0.3 // Сцена активируется, когда видна на 30%
+  };
 
-    scene.style.setProperty('--progress', progress.toFixed(3));
-
-    if (progress > 0.15 && progress < 0.85) {
-      scene.classList.add('active');
-      
-      // Анимация свитка в легенде
-      const scroll = scene.querySelector('.castle-scroll');
-      if (scroll) {
-        const tilt = (progress - 0.5) * 15; // Наклон
-        scroll.style.transform = `perspective(1000px) rotateX(${tilt}deg) translateY(${tilt * 2}px)`;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
       }
-    } else {
-      scene.classList.remove('active');
-    }
-  });
-}
+    });
+  }, observerOptions);
 
-// Плавное раскрытие FAQ
-document.querySelectorAll('.faq-q').forEach(q => {
-  q.addEventListener('click', () => {
-    const parent = q.parentElement;
-    parent.classList.toggle('active');
-    const icon = q.querySelector('i');
-    icon.style.transform = parent.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+  scenes.forEach(scene => observer.observe(scene));
+
+  // Логика FAQ (аккордеон)
+  const faqItems = document.querySelectorAll('.faq-item');
+  
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-q');
+    question.addEventListener('click', () => {
+      // Закрыть другие, если нужно (опционально)
+      // faqItems.forEach(i => { if(i !== item) i.classList.remove('active'); });
+      
+      item.classList.toggle('active');
+    });
   });
+
+  // Параллакс эффект для свитка при скролле (только для десктопа)
+  if (window.innerWidth > 1024) {
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      const legendScroll = document.querySelector('.castle-scroll');
+      if (legendScroll) {
+        legendScroll.style.transform = `translateY(${scrollY * 0.05}px) rotateX(${scrollY * 0.01}deg)`;
+      }
+    });
+  }
 });
-
-window.addEventListener('scroll', onScroll);
-onScroll();
