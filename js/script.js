@@ -40,3 +40,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+document.addEventListener('DOMContentLoaded', () => {
+  // ... (весь предыдущий JavaScript код: observer, faqItems, window.addEventListener('scroll')) ...
+
+  // ЭФФЕКТ ПАДАЮЩИХ ИСКР
+  const sparkleContainer = document.getElementById('sparkle-container');
+  const numSparkles = 50; // Количество искр
+
+  function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.classList.add('sparkle');
+
+    const size = Math.random() * 3 + 1; // Размер искры от 1 до 4px
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+
+    sparkle.style.left = `${Math.random() * 100}%`; // Случайная позиция по горизонтали
+    sparkle.style.animationDelay = `${Math.random() * -8}s`; // Случайная задержка для бесконечного цикла
+
+    sparkleContainer.appendChild(sparkle);
+  }
+
+  for (let i = 0; i < numSparkles; i++) {
+    createSparkle();
+  }
+});
