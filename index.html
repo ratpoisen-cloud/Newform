@@ -1,105 +1,323 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Свадьба: Ашипка и Молекула</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хроника Ожидания</title>
+    
+    <meta property="og:title" content="Хроника Ожидания">
+    <meta property="og:description" content="Средневековый счетчик времени без предложения.">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💍</text></svg>">
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=MedievalSharp&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Подключение ваших шрифтов */
+        @font-face {
+            font-family: 'DeutschGothic';
+            src: url('Deutsch Gothic Regular.otf');
+        }
+        @font-face {
+            font-family: 'Helmswald';
+            src: url('Helmswald.otf');
+        }
 
-  <link rel="stylesheet" href="css/style.css">
+        :root {
+            --burgundy: #4a0404;
+            --deep-gold: #b8860b;
+            --parchment: #f5e6c8;
+            --ink: #1a1a1a;
+            --stone: #2c2c2c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="fill:gold"><path d="M10 0l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/></svg>'), auto;
+        }
+
+        body {
+            background-color: var(--stone);
+            /* Текстура темного камня или замковых стен */
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            color: var(--parchment);
+            font-family: 'Lora', serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .manuscript {
+            background: var(--parchment);
+            color: var(--ink);
+            max-width: 650px;
+            width: 100%;
+            padding: 60px 40px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 100px rgba(139,69,19,0.2);
+            border: 20px solid transparent;
+            border-image: url('https://www.transparenttextures.com/patterns/iron-grip.png') 30 round;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+        }
+
+        /* Декоративные уголки */
+        .manuscript::before, .manuscript::after {
+            content: "⚜";
+            position: absolute;
+            font-size: 30px;
+            color: var(--burgundy);
+        }
+        .manuscript::before { top: 10px; left: 10px; }
+        .manuscript::after { bottom: 10px; right: 10px; }
+
+        .settings-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            filter: sepia(1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px double var(--burgundy);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'UnifrakturMaguntia', 'DeutschGothic', serif;
+            font-size: 3em;
+            color: var(--burgundy);
+            margin-bottom: 10px;
+        }
+
+        .bible-quote {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin: 20px 0;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .counter-box {
+            background: rgba(0,0,0,0.05);
+            border: 1px solid var(--burgundy);
+            padding: 30px 10px;
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            text-align: center;
+        }
+
+        .time-val {
+            font-family: 'MedievalSharp', serif;
+            font-size: 2.5em;
+            display: block;
+            color: var(--burgundy);
+        }
+
+        .time-label {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .seal {
+            width: 100px;
+            height: 100px;
+            background: var(--burgundy);
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 0.7em;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
+            transform: rotate(-5deg);
+            border: 2px solid var(--deep-gold);
+        }
+
+        .links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .links a {
+            display: block;
+            color: var(--burgundy);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1.1em;
+            transition: 0.3s;
+        }
+
+        .links a:hover {
+            color: var(--deep-gold);
+            letter-spacing: 1px;
+        }
+
+        .visit-log {
+            font-size: 0.8em;
+            text-align: center;
+            margin-top: 40px;
+            color: var(--stone);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 20px;
+        }
+
+        #settings-panel {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 40px;
+            background: white;
+            padding: 15px;
+            border: 1px solid var(--burgundy);
+            z-index: 20;
+        }
+
+        .ring-particle {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            z-index: 9999;
+            animation: ringFade 2s ease-out forwards;
+        }
+
+        @keyframes ringFade {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(150px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 500px) {
+            h1 { font-size: 2em; }
+            .time-val { font-size: 1.5em; }
+        }
+    </style>
 </head>
 <body>
 
-<main id="story">
-
- <section class="scene scene-prologue forest-bg">
-    <div class="scene-inner">
-      <p class="eyebrow">Приглашение на торжество</p>
-      <h1>Ашипка<br>&<br>Молекула</h1>
-      <p class="date">2 августа 2026</p>
+<div class="manuscript">
+    <div class="settings-btn" onclick="toggleSettings()">📜</div>
+    
+    <div id="settings-panel">
+        <input type="datetime-local" id="dateInput">
+        <button onclick="saveDate()">Скрепить печатью</button>
     </div>
-  </section>
 
- <section class="scene scene-couple forest-bg">
-    <div class="scene-inner">
-      <h2>Там, где лес встречает море</h2>
-      <div class="photo-frame">
-        <img src="assets/img/wedding-photo.jpg" alt="Фото пары">
-      </div>
+    <header>
+        <h1>Апостол Павел</h1>
+        <p style="font-size: 0.8em; letter-spacing: 2px;">I ПОСЛАНИЕ К КОРИНФЯНАМ 7:2</p>
+    </header>
+
+    <div class="bible-quote">
+        «Во избежание блуда, каждый имей свою жену, и каждая имей своего мужа».
     </div>
-  </section>
 
- <section class="scene scene-when mist-bg">
-    <div class="scene-inner">
-      <h2>Когда и где</h2>
-      <p>2 августа 2026 • Ялта • сбор гостей 15:00</p>
-    </div>
-  </section>
-
-  <section class="scene scene-details mist-bg">
-    <div class="scene-inner">
-      <h2>Детали события</h2>
-      <div class="cards">
-        <div class="card">Тайминг: сбор 15:00, церемония 16:00</div>
-        <div class="card">Локация: Отель «Зазеркалье», Ялта</div>
-        <div class="card">Дресс-код: природные тона</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="scene scene-faq deep-bg">
-    <div class="scene-inner faq">
-      <h2>Важная информация</h2>
-
-      <div class="faq-item">
-        <div class="faq-q">Ж/Д билеты</div>
-        <div class="faq-a">Поезда «Таврия». <a href="https://grandtrain.ru/" target="_blank">grandtrain.ru</a></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">На машине</div>
-        <div class="faq-a">Проезд через Крымский мост. <a href="https://t.me/most_official" target="_blank">Чат мониторинга</a></div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Где жить</div>
-        <div class="faq-a">
-          <a href="https://sutochno.ru" target="_blank">sutochno.ru</a><br>
-          <a href="https://ostrovok.ru" target="_blank">ostrovok.ru</a><br>
-          <a href="https://tvil.ru" target="_blank">tvil.ru</a>
+    <div class="counter-box">
+        <div>
+            <span id="days" class="time-val">0</span>
+            <span class="time-label">Дней</span>
         </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q">Такси</div>
-        <div class="faq-a">
-          <a href="https://taxi-volna.com/" target="_blank">Волна</a><br>
-          <a href="https://taximaxim.ru/" target="_blank">Максим</a><br>
-          <a href="https://crimea.uptaxi.ru/" target="_blank">UpTaxi</a>
+        <div>
+            <span id="hours" class="time-val">00</span>
+            <span class="time-label">Часов</span>
         </div>
-      </div>
+        <div>
+            <span id="minutes" class="time-val">00</span>
+            <span class="time-label">Минут</span>
+        </div>
+        <div>
+            <span id="seconds" class="time-val">00</span>
+            <span class="time-label">Секунд</span>
+        </div>
     </div>
-  </section>
 
-<section class="scene scene-rsvp deep-bg">
-    <div class="scene-inner">
-      <h2>Дай добро</h2>
-      <div class="rsvp">
-        <a class="btn" href="mailto:anna.maxim@mail.ru">Я буду</a>
-        <a class="btn secondary" href="mailto:anna.maxim@mail.ru">Не смогу</a>
-      </div>
+    <div class="seal">
+        БЕЗ<br>ПРЕДЛОЖЕНИЯ
     </div>
-  </section>
 
-</main>
+    <div class="links">
+        <a href="https://www.pravmir.ru/venchanie/">♰ Таинство Венчания</a>
+        <a href="https://www.tiffany.ru/engagement/engagement-rings/">♰ Выбрать Кольцо</a>
+    </div>
 
-<footer>
-  <img src="assets/img/yggdrasil-lg.png" alt="Древо" />
-  <p>Ашипка & Молекула</p>
-</footer>
+    <div class="visit-log">
+        Екатерина входила в сии палаты <span id="visits">0</span> раз
+    </div>
+</div>
 
-<script src="js/script.js"></script>
+<script>
+    // Логика счетчика (21 августа 2025)
+    let defaultDate = new Date(2025, 7, 21, 0, 0, 0).getTime();
+    let startDate = localStorage.getItem('castleDate') ? parseInt(localStorage.getItem('castleDate')) : defaultDate;
+
+    function update() {
+        const diff = new Date().getTime() - startDate;
+        if (diff > 0) {
+            document.getElementById("days").textContent = Math.floor(diff / 86400000);
+            document.getElementById("hours").textContent = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
+            document.getElementById("minutes").textContent = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            document.getElementById("seconds").textContent = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+        }
+    }
+
+    function toggleSettings() {
+        const p = document.getElementById('settings-panel');
+        p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function saveDate() {
+        const val = document.getElementById('dateInput').value;
+        if (val) {
+            startDate = new Date(val).getTime();
+            localStorage.setItem('castleDate', startDate);
+            toggleSettings();
+        }
+    }
+
+    // Визиты
+    let v = parseInt(localStorage.getItem('castleVisits')) || 0;
+    if (!sessionStorage.getItem('vActive')) {
+        v++;
+        localStorage.setItem('castleVisits', v);
+        sessionStorage.setItem('vActive', '1');
+    }
+    document.getElementById('visits').textContent = v;
+
+    // Кольца (золотые)
+    function createRing(x, y) {
+        const r = document.createElement('div');
+        r.className = 'ring-particle';
+        r.innerHTML = '💍';
+        r.style.left = x + 'px';
+        r.style.top = y + 'px';
+        document.body.appendChild(r);
+        setTimeout(() => r.remove(), 2000);
+    }
+
+    window.addEventListener('mousemove', (e) => { if(Math.random() > 0.94) createRing(e.clientX, e.clientY); });
+    window.addEventListener('touchmove', (e) => { createRing(e.touches[0].clientX, e.touches[0].clientY); });
+
+    setInterval(update, 1000);
+    update();
+</script>
+
 </body>
 </html>
