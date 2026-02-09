@@ -3,583 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Свадьба: Ашипка и Молекула</title>
-  
-  <link rel="icon" href="favicon.png" type="image/png">
+  <title>Великое Торжество: Ашипка и Молекула</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <style>
-    :root {
-      /* --- ПАЛИТРА ПРИКЛЮЧЕНИЙ --- */
-      --forest-deep: #2A4B3C;
-      --forest-sage: #8FAB93;
-      --wood-warm: #C9A25B;    
-      --gold-glow: #e6c889;
-      --cream-paper: #F7F4E8;
-      --text-dark: #1A2F25;
-      
-      --shadow-soft: 0 10px 30px rgba(42, 75, 60, 0.15);
-      --magic-glow: 0 0 15px rgba(201, 162, 91, 0.3), 0 5px 20px rgba(0,0,0,0.1);
-      --transition: all 0.5s ease;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      background-color: var(--cream-paper);
-      /* Текстура старой бумаги */
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
-      color: var(--text-dark);
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    /* --- СВЕТЛЯЧКИ --- */
-    #fireflies-container {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 999; overflow: hidden;
-    }
-    .firefly {
-      position: absolute; border-radius: 50%;
-      background: #fff8e7; box-shadow: 0 0 10px 2px rgba(255, 215, 0, 0.6);
-      opacity: 0; animation: fly infinite ease-in-out;
-    }
-    @keyframes fly {
-      0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-      50% { opacity: 0.8; transform: translate(var(--x2), var(--y2)) scale(1); }
-      100% { opacity: 0; transform: translate(var(--x4), var(--y4)) scale(0.5); }
-    }
-
-    h1, h2, h3, .couple-names, .quote-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    /* --- ЭКРАН ПРИВЕТСТВИЯ --- */
-    #welcome-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--forest-deep); z-index: 10000;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      color: var(--cream-paper); text-align: center; transition: opacity 1s ease; padding: 20px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
-    }
-    
-    .enter-btn {
-      padding: 15px 40px; border: 2px solid var(--wood-warm); background: transparent;
-      color: var(--wood-warm); font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
-      text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 50px;
-      transition: var(--transition); box-shadow: 0 0 10px rgba(201, 162, 91, 0.2);
-    }
-    .enter-btn:hover {
-      background: var(--wood-warm); color: var(--forest-deep); box-shadow: 0 0 20px var(--gold-glow);
-    }
-
-    /* --- КНОПКА ЗВУКА --- */
-    #sound-control {
-      position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px;
-      background: var(--wood-warm); border-radius: 50%; color: var(--forest-deep);
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      z-index: 100; box-shadow: 0 5px 15px rgba(0,0,0,0.2); opacity: 0; transition: opacity 0.5s ease;
-      border: 2px solid var(--cream-paper);
-    }
-
-    /* --- РАЗДЕЛИТЕЛИ --- */
-    .leaf-divider {
-      text-align: center; margin: 40px 0; color: var(--wood-warm); font-size: 1.8rem;
-      display: flex; align-items: center; justify-content: center; gap: 20px;
-      text-shadow: 0 0 5px var(--gold-glow);
-    }
-    .leaf-divider::before, .leaf-divider::after {
-      content: ''; display: block; height: 1px; width: 100px;
-      background: linear-gradient(to right, transparent, var(--wood-warm), transparent); opacity: 0.8;
-    }
-
-    /* --- ШАПКА --- */
-    header {
-      min-height: 100vh; padding: 60px 20px; display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(rgba(26, 47, 37, 0.5), rgba(42, 75, 60, 0.4)), url('view.jpg') center center / cover no-repeat;
-      background-attachment: fixed; text-align: center;
-    }
-
-    .hero {
-      background: rgba(247, 244, 232, 0.92); padding: 70px 40px; border-radius: 16px; 
-      border: 2px solid var(--wood-warm); outline: 3px solid rgba(201, 162, 91, 0.3); outline-offset: -8px;
-      max-width: 700px; width: 100%; backdrop-filter: blur(8px); animation: fadeIn 1.5s ease-out;
-      box-shadow: var(--magic-glow);
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-    .hero h1 { font-size: 3.8rem; margin-bottom: 15px; color: var(--forest-deep); line-height: 1.1; text-shadow: 1px 1px 2px rgba(255,255,255,0.5); }
-    .hero .subtitle { font-size: 1.3rem; margin-bottom: 25px; color: var(--wood-warm); text-transform: uppercase; letter-spacing: 3px; font-weight: 600; text-shadow: 0 0 5px var(--gold-glow); }
-    .date { font-size: 1.6rem; margin-top: 25px; font-family: 'Cormorant Garamond', serif; font-weight: 600; color: var(--forest-deep); display: flex; align-items: center; justify-content: center; gap: 15px; }
-
-    .couple-photo-container {
-        margin-top: 45px; position: relative; padding: 10px; background: #fff;
-        border: 3px solid var(--wood-warm); border-radius: 8px; box-shadow: var(--magic-glow);
-        transform: rotate(-1deg); transition: transform 0.3s ease;
-    }
-    .couple-photo-container:hover { transform: rotate(0deg) scale(1.02); }
-    .couple-photo { width: 100%; height: auto; display: block; }
-
-    /* --- ТАЙМЕР --- */
-    .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 40px auto; max-width: 500px; }
-    .countdown div {
-      width: 90px; height: 90px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0 auto;
-      border: 3px solid transparent;
-      background-image: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), linear-gradient(to bottom right, #d4af37, #966F33, #f3d077);
-      background-origin: border-box; background-clip: content-box, border-box;
-      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), inset 0 0 10px rgba(212, 175, 55, 0.3);
-    }
-    .countdown span { font-size: 2rem; font-weight: 700; color: var(--text-dark); line-height: 1; font-family: 'Cormorant Garamond', serif; }
-    .countdown small { font-size: 0.7rem; color: var(--wood-warm); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-
-    /* --- ОБЩИЕ БЛОКИ --- */
-    section { padding: 90px 20px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
-    h2 { font-size: 3.2rem; margin-bottom: 40px; text-align: center; color: var(--forest-deep); }
-
-    .quote-text { text-align: center; font-size: 1.6rem; font-style: italic; color: var(--wood-warm); margin: -40px auto 60px; max-width: 800px; padding: 0 20px; line-height: 1.4; text-shadow: 0 0 8px var(--gold-glow); }
-
-    .invitation-paper {
-      text-align: center; max-width: 750px; margin: 0 auto 60px; font-size: 1.25rem; padding: 50px;
-      background-color: #fffcf5; border: 2px solid var(--wood-warm); box-shadow: var(--magic-glow); position: relative; border-radius: 4px;
-    }
-    .invitation-paper::after, .invitation-paper::before { content: '✦'; color: var(--wood-warm); font-size: 24px; position: absolute; text-shadow: 0 0 5px var(--gold-glow); }
-    .invitation-paper::before { top: 10px; left: 15px; } .invitation-paper::after { bottom: 10px; right: 15px; }
-
-    /* --- КАРТОЧКИ --- */
-    .details-container {
-      background-color: rgba(143, 171, 147, 0.1); border-radius: 20px; padding: 60px 30px;
-      border: 3px double var(--forest-sage); position: relative;
-    }
-    .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
-    .card { text-align: center; }
-    .card i { font-size: 3rem; color: var(--wood-warm); margin-bottom: 20px; filter: drop-shadow(0 0 8px var(--gold-glow)); }
-    .card h3 { margin: 15px 0; color: var(--forest-deep); font-size: 1.7rem; }
-
-    /* --- КАРТА --- */
-    .map-container { border: 4px solid var(--wood-warm); box-shadow: var(--magic-glow); border-radius: 12px; overflow: hidden; position: relative; }
-    .map-label {
-      background: var(--wood-warm); color: var(--forest-deep); display: inline-block; padding: 10px 25px; border-radius: 30px;
-      position: relative; top: -18px; left: 50%; transform: translateX(-50%); z-index: 10; font-weight: 700; font-family: 'Cormorant Garamond', serif;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15); border: 2px solid var(--cream-paper);
-    }
-    .map-container:hover img { transform: scale(1.03); }
-<section class="scene scene-prologue forest-bg">
-  <div class="scene-inner">
-    <p class="eyebrow castle-font-alt">Древнее предание гласит</p>
-    <h1 class="castle-title">Ашипка <span>&</span> Молекула</h1>
-    <div class="sigil"><i class="fa-solid fa-fort-awesome"></i></div>
-    <p class="date">2 августа 2026</p>
-  </div>
-</section>
-
-<section class="scene scene-legend mist-bg">
-  <div class="scene-inner">
-    <h2 class="castle-title">Легенда двух сердец</h2>
-    <div class="parchment-scroll">
-      <p>В те времена, когда горы Тавриды были окутаны лишь туманом и тайной, двое путников нашли тропу к сокрытому замку...</p>
-      <p>Сквозь шепот столетних лесов и рокот морских волн, их судьбы переплелись, словно узоры на старинном гобелене.</p>
-    </div>
-    <div class="photo-frame">
-      <img src="assets/img/history-photo.jpg" alt="История">
-    </div>
-  </div>
-</section>
-    /* --- FAQ (ВЫПАДАЮЩИЙ СПИСОК) --- */
-    .faq-container { max-width: 800px; margin: 60px auto 0; }
-    .faq-item {
-      background-color: #fff; margin-bottom: 15px; border-radius: 8px;
-      border: 1px solid var(--forest-sage); overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: var(--transition);
-    }
-    .faq-item:hover { transform: translateY(-2px); border-color: var(--wood-warm); }
-    .faq-question {
-      padding: 20px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--forest-deep);
-      background: rgba(143, 171, 147, 0.1);
-    }
-    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; background-color: #fffcf5; }
-    .faq-answer p { padding: 25px; font-size: 1.1rem; color: var(--text-dark); margin: 0; border-top: 1px dashed var(--wood-warm); }
-    .arrow { transition: transform 0.3s ease; color: var(--wood-warm); }
-    .active .arrow { transform: rotate(180deg); }
-    .active .faq-answer { max-height: 500px; }
-    .checklist { list-style: none; padding: 0; text-align: left; }
-    .checklist li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-    .checklist li i { color: var(--wood-warm); font-size: 1.2rem; }
-
-    /* --- ПОГОДА --- */
-    .weather-card {
-      background: linear-gradient(to bottom right, #fffef8, #fdf8e4); border: 3px solid var(--wood-warm);
-      margin-top: 60px; padding: 40px; border-radius: 24px; text-align: center; position: relative; overflow: hidden;
-      box-shadow: var(--magic-glow);
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); }}
-
-    /* --- RSVP --- */
-    .rsvp-section {
-      background-color: var(--forest-deep); border-radius: 30px; padding: 80px 30px; text-align: center; margin-top: 80px;
-      color: var(--cream-paper);
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
-      border: 3px solid var(--wood-warm); box-shadow: var(--magic-glow); margin-bottom: 0;
-    }
-    .rsvp-section h2 { color: var(--wood-warm); text-shadow: 0 0 10px var(--gold-glow); }
-    .rsvp-buttons { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 40px; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-      padding: 20px 40px; background-color: var(--wood-warm); color: var(--forest-deep);
-      text-decoration: none; border-radius: 4px; font-weight: 700;
-      transition: all 0.3s ease; letter-spacing: 1px; text-transform: uppercase; font-size: 1rem;
-      font-family: 'Cormorant Garamond', serif; box-shadow: 0 0 15px rgba(201, 162, 91, 0.3); border: 2px solid var(--wood-warm);
-    }
-    .btn:hover { background-color: #b88f45; transform: translateY(-3px); box-shadow: 0 0 25px var(--gold-glow); color: var(--cream-paper);}
-    .btn-secondary { background-color: transparent; color: var(--wood-warm); border: 2px solid var(--wood-warm); }
-    .btn-secondary:hover { background-color: var(--wood-warm); color: var(--forest-deep); }
-
-    /* --- ФУТЕР --- */
-    footer {
-      text-align: center; padding: 100px 20px; background: var(--text-dark); color: var(--forest-sage);
-      border-top: 2px solid var(--wood-warm); margin-top: 50px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    }
-    .couple-names { font-size: 3rem; margin-bottom: 20px; color: var(--wood-warm); text-shadow: 0 0 15px rgba(201, 162, 91, 0.5); }
-
-    .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-    /* --- МОБИЛЬНАЯ АДАПТАЦИЯ --- */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.2rem; }
-      .hero { padding: 40px 20px; }
-      
-      .countdown { gap: 8px; max-width: 100%; }
-      .countdown div { width: 65px; height: 65px; }
-      .countdown span { font-size: 1.4rem; }
-      .countdown small { font-size: 0.6rem; }
-
-      .quote-text { font-size: 1.2rem; padding: 0 10px; }
-      .btn { width: 100%; }
-      .faq-question { font-size: 1.1rem; padding: 15px; }
-      section { padding: 50px 15px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div id="fireflies-container"></div>
+<main id="story">
 
-  <audio id="bg-music" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-
-  <div id="welcome-overlay">
-    <i class="fas fa-compass" style="font-size: 4rem; margin-bottom: 25px; color: var(--wood-warm); filter: drop-shadow(0 0 10px var(--gold-glow));"></i>
-    <h1 style="font-size: 3rem; color: var(--wood-warm);">Ашипка & Молекула</h1>
-    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-top: 10px;">Наше главное приключение</p>
-    <button class="enter-btn" onclick="enterSite()" style="margin-top: 40px;">Начать путешествие</button>
-  </div>
-
-  <div id="sound-control" onclick="toggleMusic()">
-    <i class="fas fa-volume-up" id="sound-icon"></i>
-  </div>
-
-  <header>
-    <div class="hero">
-      <p class="subtitle">Приглашение на торжество</p>
-      <h1>Ашипка моладасти<br>&<br>Молекула фентанила</h1>
-      <div class="date">
-        <i class="far fa-calendar-alt" style="color: var(--wood-warm); filter: drop-shadow(0 0 5px var(--gold-glow));"></i>
-        <span>2 августа 2026</span>
+  <section class="scene scene-prologue forest-bg">
+    <div class="scene-inner">
+      <p class="castle-accent-font eyebrow">Указ о союзе двух сердец</p>
+      <h1 class="castle-main-title">Ашипка<br><span class="ampersand">&</span><br>Молекула</h1>
+      <div class="castle-sigil">
+        <i class="fa-solid fa-shield-halved"></i>
       </div>
-      <div id="countdown" class="countdown">
-        <div><span id="days">0</span><small>Дней</small></div>
-        <div><span id="hours">0</span><small>Часов</small></div>
-        <div><span id="minutes">0</span><small>Минут</small></div>
-        <div><span id="seconds">0</span><small>Секунд</small></div>
-      </div>
-      <p style="margin-top: 30px; font-weight: 600; font-size: 1.1rem;">
-        <i class="fas fa-map-marker-alt" style="color: var(--wood-warm); margin-right: 8px; filter: drop-shadow(0 0 5px var(--gold-glow));"></i>
-        Крым, Ялта. Там, где лес встречает море.
-      </p>
-      <div class="couple-photo-container">
-        <img src="wedding-photo.jpg" alt="Ашипка и Молекула" class="couple-photo">
-      </div>
-    </div>
-  </header>
-
-  <section>
-    <div class="leaf-divider">
-        <i class="fas fa-ring" style="font-size: 2rem; filter: drop-shadow(0 0 8px var(--gold-glow));"></i>
-    </div>
-    
-    <div class="quote-text fade-in">
-      "Я предпочту разделить с тобой одну смертную жизнь, чем провести в одиночестве все эпохи мира."
-    </div>
-    
-    <h2>Шо вы, головы?!</h2>
-    
-    <div class="invitation-paper fade-in">
-      <p>Это мы смотрим мчишь ты на наше торжество или нет.</p>
-      <p>Свадьба — это весело, порадуй себя и нас.</p>
-      <p style="margin-top: 25px; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--forest-deep);">
-        Ждем тебя как обед в самолете!
-      </p>
-    </div>
-
-    <div class="details-container fade-in">
-        <div class="details">
-        <div class="card">
-            <i class="fas fa-clock"></i>
-            <h3>Тайминг</h3>
-            <p>2 августа 2026</p>
-            <p>Сбор гостей: 15:00</p>
-            <p>Церемония: 16:00</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-tree"></i>
-            <h3>Локация</h3>
-            <p><strong>Отель "Зазеркалье"</strong></p>
-            <p>г. Ялта, Приморский парк, 9</p>
-            <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">В живописном парке</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-glass-cheers"></i>
-            <h3>Дресс-код</h3>
-            <p>Природные тона: зеленый, золото, беж.</p>
-            <p>Удобная обувь для прогулок</p>
-        </div>
-        </div>
-    </div>
-    
-    <div class="faq-container fade-in">
-      <h2 style="font-size: 2.5rem; margin-bottom: 25px;">Важная информация</h2>
-      
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>Что взять с собой? (Чек-лист)</span>
-          <i class="fas fa-chevron-down arrow"></i>
-        </div>
-        <div class="faq-answer">
-          <p>
-            <ul class="checklist">
-              <li><i class="fas fa-check"></i> Паспорт (для заселения в отель)</li>
-              <li><i class="fas fa-check"></i> Удобная обувь (будем гулять по парку)</li>
-              <li><i class="fas fa-check"></i> Солнцезащитный крем и очки (Крымское солнце!)</li>
-              <li><i class="fas fa-check"></i> Купальник/плавки (в отеле есть бассейн и море рядом)</li>
-              <li><i class="fas fa-check"></i> Отличное настроение!</li>
-            </ul>
-          </p>
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>Что дарить?</span>
-          <i class="fas fa-chevron-down arrow"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Лучший подарок для нас — ваше присутствие и вклад в бюджет нашего будущего семейного гнездышка (в конверте). Если хотите подарить что-то памятное — мы будем рады всему, что сделано с душой!</p>
-        </div>
-      </div>
-
-      <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-question">
-          <span>Как добраться?</span>
-          <i class="fas fa-chevron-down arrow"></i>
-        </div>
-        <div class="faq-answer">
-          <p>Отель находится в центре Ялты, в Приморском парке. Если вы на машине — у отеля есть парковка. Если нужен совет по трансферу из аэропорта или вокзала — напишите нам, мы подскажем проверенных водителей.</p>
-        </div>
-      </div>
-    </div>
-
-    <div style="text-align: center; margin-top: 80px;" class="fade-in">
-      <div class="map-label"><i class="fas fa-map-marked-alt"></i> Карта местности</div>
-      <div class="map-container" style="position: relative; cursor: pointer;" onclick="window.open('https://yandex.ru/maps/-/CPAObFmg', '_blank')">
-        <img src="fantasy-map.jpg" alt="Стилизованная карта" style="width: 100%; height: auto; display: block; transition: transform 0.5s ease;">
-        <div style="position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center; pointer-events: none;">
-          <span style="background: rgba(42, 75, 60, 0.8); color: var(--wood-warm); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; border: 1px solid var(--wood-warm);">
-            <i class="fas fa-external-link-alt"></i> Нажмите, чтобы открыть навигатор
-          </span>
-        </div>
-      </div>
-      <p style="margin-top: 25px; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem;">
-        Чтобы легко нас найти:<br>
-        <a href="https://yandex.ru/maps/-/CPAObFmg" target="_blank" class="btn" style="margin-top: 15px; display: inline-block; padding: 10px 25px; font-size: 0.9rem;">
-           Открыть Яндекс.Карты
-        </a>
-      </p>
-    </div>
-
-    <div class="weather-card fade-in">
-      <div class="weather-header">
-        <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 700; color: var(--forest-deep);">Ялта • 2 Августа</span>
-        <span style="font-size: 0.9rem; color: #888; border: 1px solid #ccc; padding: 2px 8px; border-radius: 10px; margin-left: 10px;">Статистика</span>
-      </div>
-      
-      <div class="weather-main-row" style="display: flex; align-items: center; justify-content: center; gap: 20px; margin: 20px 0;">
-        <i class="fas fa-sun" style="font-size: 4rem; color: #f39c12; filter: drop-shadow(0 0 15px rgba(243, 156, 18, 0.6)); animation: spin 20s linear infinite;"></i>
-        <div style="text-align: left;">
-          <div style="font-size: 3.5rem; font-weight: 700; line-height: 1; color: var(--forest-deep);">+29°</div>
-          <div style="font-size: 1rem; color: var(--wood-warm);">Ясно, без осадков</div>
-        </div>
-      </div>
-
-      <div class="weather-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; border-top: 1px dashed var(--wood-warm); padding-top: 20px;">
-        <div style="text-align: center;">
-          <i class="fas fa-water" style="color: #3498db; font-size: 1.2rem; margin-bottom: 5px;"></i>
-          <div style="font-size: 0.8rem; color: #666;">Вода</div>
-          <div style="font-weight: 600; color: var(--forest-deep);">+24°C</div>
-        </div>
-        <div style="text-align: center; border-left: 1px solid #eee; border-right: 1px solid #eee;">
-          <i class="fas fa-wind" style="color: #95a5a6; font-size: 1.2rem; margin-bottom: 5px;"></i>
-          <div style="font-size: 0.8rem; color: #666;">Ветер</div>
-          <div style="font-weight: 600; color: var(--forest-deep);">3 м/с</div>
-        </div>
-        <div style="text-align: center;">
-          <i class="fas fa-umbrella" style="color: var(--wood-warm); font-size: 1.2rem; margin-bottom: 5px;"></i>
-          <div style="font-size: 0.8rem; color: #666;">Дождь</div>
-          <div style="font-weight: 600; color: var(--forest-deep);">2%</div>
-        </div>
-      </div>
-
-      <p style="margin-top: 20px; font-size: 0.95rem; color: var(--text-dark); font-style: italic; opacity: 0.8;">
-        *Данные на основе средних показателей. Но крем от солнца всё же захватите!
-      </p>
+      <p class="date">Второе августа, MMXXVI</p>
     </div>
   </section>
 
-  <section class="fade-in" style="background: rgba(42, 75, 60, 0.05); padding-top: 60px; border-top: 2px solid var(--wood-warm); border-bottom: 2px solid var(--wood-warm);">
-    <div class="leaf-divider"><i class="fas fa-music"></i></div>
-    <h2>Наш плейлист</h2>
-    <div class="playlist-container" style="margin: 40px auto; max-width: 800px; box-shadow: var(--magic-glow); border-radius: 12px; overflow: hidden; border: 3px solid var(--wood-warm);">
-      <iframe src="https://music.yandex.ru/iframe/playlist/ratpoisen/1059" width="100%" height="400" frameborder="0"></iframe>
+  <section class="scene scene-legend mist-bg">
+    <div class="scene-inner">
+      <h2 class="castle-main-title">Легенда</h2>
+      <div class="castle-scroll">
+        <div class="scroll-content">
+          <p>В те времена, когда горы Тавриды были окутаны лишь туманом и тайной, двое путников нашли тропу к сокрытому замку...</p>
+          <p>Сквозь шепот столетних лесов и рокот морских волн, их судьбы переплелись, словно узоры на старинном гобелене.</p>
+        </div>
+      </div>
+      <div class="sigil-divider">
+        <i class="fa-solid fa-scroll"></i>
+      </div>
     </div>
   </section>
 
-  <section class="rsvp-section fade-in">
-    <h2>Дай добро</h2>
-    <p style="font-size: 1.3rem; font-family: 'Cormorant Garamond', serif;">Маякни по-братски о своем решении до 1 июля 2026.</p>
-    <div class="rsvp-buttons">
-      <a href="mailto:anna.maxim@mail.ru?subject=Буду как штык&body=Дорогие! Буду как штык 2 августа 2026." class="btn">
-        <i class="fas fa-check-circle"></i> Уже еду!
-      </a>
-      <a href="mailto:anna.maxim@mail.ru?subject=Не обессудь&body=Дорогие! Я чорт, не смогу быть. Обнимаю!" class="btn btn-secondary">
-        <i class="far fa-sad-tear"></i> Не смогу (плак)
-      </a>
+  <section class="scene scene-couple forest-bg">
+    <div class="scene-inner">
+      <h2 class="castle-main-title">Хранители Крымских Гор</h2>
+      <div class="photo-frame">
+        <img src="assets/img/wedding-photo.jpg" alt="Фото пары">
+      </div>
     </div>
   </section>
 
-  <footer>
-    <div class="couple-names">Ашипка & Молекула</div>
-    <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;">С любовью и благодарностью обняли и приподняли!</p>
-    <div class="leaf-divider" style="margin: 40px auto; opacity: 0.5; font-size: 1.2rem;"><i class="fas fa-leaf"></i></div>
-    <p style="font-size: 0.9rem; opacity: 0.7;">© 2026 Wedding Day | Adventure Edition</p>
-  </footer>
+  <section class="scene scene-logistics deep-bg">
+    <div class="scene-inner">
+      <h2 class="castle-main-title">Как добраться до Цитадели</h2>
+      <div class="faq-castle">
+        <div class="faq-item">
+          <div class="faq-q"><i class="fa-solid fa-train-subway"></i> Железные кони</div>
+          <div class="faq-a">Поезда «Таврия» доставят вас в наши земли. <a href="https://grandtrain.ru/" target="_blank">Билеты здесь</a></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><i class="fa-solid fa-horse-head"></i> Свое поместье на колесах</div>
+          <div class="faq-a">Путь лежит через Крымский мост. Следите за гонцами в <a href="https://t.me/most_official" target="_blank">канале мониторинга</a></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q"><i class="fa-solid fa-key"></i> Постоялые дворы</div>
+          <div class="faq-a">Для ночлега выбирайте лучшие палаты на <a href="https://sutochno.ru" target="_blank">Sutochno.ru</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    // --- УПРАВЛЕНИЕ МУЗЫКОЙ ---
-    const music = document.getElementById('bg-music');
-    const overlay = document.getElementById('welcome-overlay');
-    const soundControl = document.getElementById('sound-control');
-    const soundIcon = document.getElementById('sound-icon');
-    let isPlaying = false;
+  <section class="scene scene-rsvp deep-bg">
+    <div class="scene-inner">
+      <h2 class="castle-main-title">Ваше решение</h2>
+      <p class="castle-accent-font">Уведомите нас о своем визите до начала лета</p>
+      <div class="rsvp-actions">
+        <a class="btn castle-btn" href="#">Принять вызов</a>
+      </div>
+    </div>
+  </section>
 
-    function enterSite() {
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.display = 'none';
-        soundControl.style.opacity = '1';
-      }, 1000);
-      try {
-        music.volume = 0.5;
-        music.play();
-        isPlaying = true;
-      } catch (e) {
-        console.log("Автозапуск заблокирован браузером");
-      }
-    }
+</main>
 
-    function toggleMusic() {
-      if (isPlaying) {
-        music.pause();
-        soundIcon.classList.remove('fa-volume-up');
-        soundIcon.classList.add('fa-volume-mute');
-      } else {
-        music.play();
-        soundIcon.classList.remove('fa-volume-mute');
-        soundIcon.classList.add('fa-volume-up');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // --- FAQ АККОРДЕОН ---
-    function toggleFaq(element) {
-      const isActive = element.classList.contains('active');
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      if (!isActive) {
-        element.classList.add('active');
-      }
-    }
-
-    // --- ГЕНЕРАЦИЯ СВЕТЛЯЧКОВ ---
-    function createFireflies() {
-      const container = document.getElementById('fireflies-container');
-      const count = 40;
-      for (let i = 0; i < count; i++) {
-        const firefly = document.createElement('div');
-        firefly.classList.add('firefly');
-        firefly.style.left = Math.random() * 100 + '%';
-        firefly.style.top = Math.random() * 100 + '%';
-        const size = Math.random() * 3 + 3;
-        firefly.style.width = size + 'px';
-        firefly.style.height = size + 'px';
-        firefly.style.setProperty('--x2', (Math.random() * 200 - 100) + 'px');
-        firefly.style.setProperty('--y2', (Math.random() * 200 - 100) + 'px');
-        firefly.style.setProperty('--x4', (Math.random() * 200 - 100) + 'px');
-        firefly.style.setProperty('--y4', (Math.random() * 200 - 100) + 'px');
-        firefly.style.animationDuration = (Math.random() * 15 + 10) + 's';
-        firefly.style.animationDelay = (Math.random() * 5) + 's';
-        container.appendChild(firefly);
-      }
-    }
-
-    const weddingDate = new Date('2026-08-02T15:00:00');
-    function updateCountdown() {
-      const now = new Date();
-      const diff = weddingDate - now;
-      if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = '<h3 style="grid-column: 1/-1; color: var(--wood-warm); text-shadow: 0 0 10px var(--gold-glow);">Сегодня тусим! ❤️</h3>';
-        return;
-      }
-      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const m = Math.floor((diff / (1000 * 60)) % 60);
-      const s = Math.floor((diff / 1000) % 60);
-      document.getElementById('days').innerText = d < 10 ? '0' + d : d;
-      document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
-      document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-      document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
-    }
-
-    function checkFadeIn() {
-      document.querySelectorAll('.fade-in').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible');
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      createFireflies();
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-      window.addEventListener('scroll', checkFadeIn);
-      checkFadeIn();
-    });
-  </script>
+<script src="js/script.js"></script>
 </body>
 </html>
